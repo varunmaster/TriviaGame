@@ -5,27 +5,27 @@ var numIncorrect = 0;
 var numUnanswered = 0;
 
 var trivia = [{
-    question: "What is 1+1",
+    question: "What is 1+1?",
     options: [0, 1, 2, 3],
     userAns: "",
     correctAns: 2
 }, {
-    question: "What is 2+2",
+    question: "What is 2+2?",
     options: [10, 11, 4, 3],
     userAns: "",
     correctAns: 4
 }, {
-    question: "What is 12+1",
+    question: "What is 12+1?",
     options: [10, 11, 42, 13],
     userAns: "",
     correctAns: 13
 }, {
-    question: "What is 10+10",
+    question: "What is 10+10?",
     options: [10, 11, 20, 30],
     userAns: "",
     correctAns: 20
 }, {
-    question: "What is 15+15",
+    question: "What is 15+15?",
     options: [40, 10, 20, 30],
     userAns: "",
     correctAns: 30
@@ -39,13 +39,15 @@ displayQuestions(3);
 displayQuestions(4);
 
 function displayQuestions(num) {
-    console.log("trivia question is: ", trivia[num].question); 
-    $(".questions").append('<p>'+trivia[num].question+'</p>');
+    console.log("trivia question is: ", trivia[num].question);
+    $(".question." + num).prepend('<p>' + trivia[num].question + '</p>');
 }
 
-function displayOptions(num) {
-
+for(var i = 0; i < trivia.length; i++){
+    for(var j = 0; j < trivia[i].options.length; j++)
+        $(".answer."+i).append('<input type="radio" name=question'+i+'/> '+trivia[i].options[j]+' <br>');
 }
+
 
 /*
 
