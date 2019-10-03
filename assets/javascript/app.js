@@ -31,11 +31,9 @@ var trivia = [{
 }];
 
 //creating and calling a function to display the questions from the trivia objectarray
-displayQuestions(0);
-displayQuestions(1);
-displayQuestions(2);
-displayQuestions(3);
-displayQuestions(4);
+for (var i = 0; i < trivia.length; i++) {
+    displayQuestions(i);
+}
 
 function displayQuestions(num) {
     // console.log("trivia question is: ", trivia[num].question);
@@ -44,35 +42,38 @@ function displayQuestions(num) {
 
 //looping through my trivia object arry and then looping through the options property array to display each as a button
 for (var i = 0; i < trivia.length; i++) {
-    for (var j = 0; j < trivia[i].options.length; j++)
-        $(".answer." + i).append('<input type="radio" class ="question" name=question' + i + ' value='+trivia[i].options[j]+' > ' + trivia[i].options[j] + ' <br>');
+    for (var j = 0; j < trivia[i].options.length; j++) {
+        $(".answer." + i).append('<input type="radio" class ="question" name=question' + i + ' value=' + trivia[i].options[j] + ' > ' + trivia[i].options[j] + ' <br>');
+    }
 }
 
 function checkAnswers() {
-    for(var i = 0; i < trivia.length; i++) {
-        console.log("userans: ", trivia[i].userAns);
-        if(trivia[i].userAns === trivia[i].correctAns) {
+    console.log("starting to check answer");
+    for (var i = 0; i < trivia.length; i++) {
+        console.log("asdf");
+        // console.log("userans: ", trivia[i].userAns);
+        if (trivia[i].userAns === trivia[i].correctAns) {
             numCorrect += 1;
-        }
-        else if(trivia[i].userAns === undefined) {
+        } else if (trivia[i].userAns === undefined) {
             numUnanswered += 1;
-        } 
-        else {
+        } else {
             numIncorrect += 1;
         }
     }
-    return numCorrect, numUnanswered, numIncorrect;
+    return [numCorrect, numUnanswered, numIncorrect];
 }
 
 function restart() {
-    numCorrect, numUnanswered, numIncorrect = 0;
+    numCorrect = 0;
+    numUnanswered = 0;
+    numIncorrect = 0;
     //setting userAnswer to blank
-    for(var i = 0; i < trivia.length; i++) {
+    for (var i = 0; i < trivia.length; i++) {
         trivia[i].userAns = "";
     }
     //clearing the selected answers
-    $(".question").prop('checked',false);
-    return trivia;
+    $(".question").prop('checked', false);
+    // return trivia;
 }
 
 $(document).ready(function () {
@@ -81,12 +82,12 @@ $(document).ready(function () {
     $(".submit").hide();
     $(".retry").hide();
 
-    $(".start").on("click",function() {
+    $(".start").on("click", function () {
         $(".start").hide();
         $(".questions").show();
         $(".submit").show();
         $(".retry").hide();
-    });//start ends here
+    }); //start ends here
 
     $(".submit").on("click", function () {
         $(".questions").hide();
@@ -94,8 +95,8 @@ $(document).ready(function () {
         $(".submit").hide();
         $(".retry").show();
         //looping through the inputs (buttons) and then getting each checked value and putting it in userAns property of trivia
-        for(var i  = 0; i < trivia.length; i++) {
-            trivia[i].userAns = $('input[name="question'+i+'"]:checked').val()
+        for (var i = 0; i < trivia.length; i++) {
+            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val();
             // console.log($('input[name="question'+i+'"]:checked').val());
             // console.log("trivia.userans: ", trivia[i].userAns);
         }
@@ -108,7 +109,7 @@ $(document).ready(function () {
         $(".numUnanswered").text(numUnanswered);
     }); //submit ends here
 
-    $(".retry").on("click", function() {
+    $(".retry").on("click", function () {
         $(".results").hide();
         $(".questions").show();
         $(".submit").show();
