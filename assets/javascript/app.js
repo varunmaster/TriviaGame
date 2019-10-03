@@ -2,34 +2,35 @@
 var numCorrect = 0;
 var numIncorrect = 0;
 var numUnanswered = 0;
-var timeLeft = 5;
+var timeLeft = 30;
 var intervalId;
+var audio = new Audio('./TheOffice.mp3');
 
 var trivia = [{
-    question: "What is 1+1?",
-    options: [0, 1, 2, 3],
+    question: "In the TV show 'The Office', who is the regional manager?",
+    options: ["Michael Scott", "Jim Halpert", "Pam Beasely", "Dwight Schrute"],
     userAns: "",
-    correctAns: "2"
+    correctAns: "Michael Scott"
 }, {
-    question: "What is 2+2?",
-    options: [10, 11, 4, 3],
+    question: "What special event does Michael host for his employees every year?",
+    options: ["The Mifflins", "The Dunflies", "The Miffies", "The Dundies"],
     userAns: "",
-    correctAns: "4"
+    correctAns: "The Dundies"
 }, {
-    question: "What is 12+1?",
-    options: [10, 11, 42, 13],
+    question: "How does Michael save Meredith from rabies?",
+    options: ["Hits her with his car", "He lends her money for an operation", "He stops her from taking too many painkillers", "He drives her mom after the Christian fiasco"],
     userAns: "",
-    correctAns: "13"
+    correctAns: "Hits her with his car"
 }, {
-    question: "What is 10+10?",
-    options: [10, 11, 20, 30],
+    question: "Who does Michael marry?",
+    options: ["Pam", "Jan", "Holly", "Angela"],
     userAns: "",
-    correctAns: "20"
+    correctAns: "Holly"
 }, {
-    question: "What is 15+15?",
-    options: [40, 10, 20, 30],
+    question: "If Michael had a gun with two bullets and was in a room with Hitler, Bin Laden, and Toby, what would he do?",
+    options: ["Shoot Hitler and Bin Laden", "Shoot Toby twice", "Shoot Hitler twice", "Shoot Bin Laden twice"],
     userAns: "",
-    correctAns: "30"
+    correctAns: "Shoot Toby twice"
 }];
 
 //creating and calling a function to display the questions from the trivia objectarray
@@ -37,21 +38,23 @@ for (var i = 0; i < trivia.length; i++) {
     displayQuestions(i);
 }
 
+//looping through my trivia object arry and then looping through the options property array to display each as a button
+for (var i = 0; i < trivia.length; i++) {
+    for (var j = 0; j < trivia[i].options.length; j++) {
+        $(".answer." + i).append('<input type="radio" class ="question" name=question' + i + ' value="' + trivia[i].options[j] + '" > ' + trivia[i].options[j] + ' <br>');
+        // console.log("here: ", trivia[i].options[j]);
+    }
+}
+
 function displayQuestions(num) {
     // console.log("trivia question is: ", trivia[num].question);
     $(".question." + num).prepend('<p>' + trivia[num].question + '</p>');
 }
 
-//looping through my trivia object arry and then looping through the options property array to display each as a button
-for (var i = 0; i < trivia.length; i++) {
-    for (var j = 0; j < trivia[i].options.length; j++) {
-        $(".answer." + i).append('<input type="radio" class ="question" name=question' + i + ' value=' + trivia[i].options[j] + ' > ' + trivia[i].options[j] + ' <br>');
-    }
-}
-
 function checkAnswers() {
     for (var i = 0; i < trivia.length; i++) {
-        // console.log("userans: ", trivia[i].userAns);
+        console.log("userans: ", trivia[i].userAns);
+        console.log("correctAns: ", trivia[i].correctAns);
         if (trivia[i].userAns === trivia[i].correctAns) {
             numCorrect += 1;
         } else if (trivia[i].userAns === undefined) {
@@ -67,8 +70,8 @@ function restart() {
     numCorrect = 0;
     numUnanswered = 0;
     numIncorrect = 0;
-    timeLeft = 5;
-    $(".show-number").html("<h2>5</h2>");
+    timeLeft = 30;
+    $(".show-number").html("<h2>30</h2>");
     //setting userAnswer to blank
     for (var i = 0; i < trivia.length; i++) {
         trivia[i].userAns = "";
@@ -93,7 +96,7 @@ function decrement() {
         $(".show-number").hide();
         stopTimer();
         for (var i = 0; i < trivia.length; i++) {
-            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val();
+            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val(); 
         }
         checkAnswers();
         $(".numCorrect").text(numCorrect);
@@ -119,7 +122,8 @@ $(document).ready(function () {
         $(".submit").show();
         $(".retry").hide();
         $(".show-number").show();
-        clearInterval(intervalId); //need to clear the interval bc if we click resume multiple times, the clock will run faster. the decrement will be called multiple times
+        // audio.play();
+        clearInterval(intervalId); 
         intervalId = setInterval(decrement, 1000);
     }); //start ends here
 
@@ -132,7 +136,7 @@ $(document).ready(function () {
         stopTimer();
         //looping through the inputs (buttons) and then getting each checked value and putting it in userAns property of trivia
         for (var i = 0; i < trivia.length; i++) {
-            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val();
+            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val(); 
             // console.log($('input[name="question'+i+'"]:checked').val());
             // console.log("trivia.userans: ", trivia[i].userAns);
         }
