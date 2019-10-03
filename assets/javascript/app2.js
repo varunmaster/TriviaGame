@@ -3,7 +3,7 @@ var numIncorrect = 0;
 var numUnanswered = 0;
 var timeLeft = 60;
 var intervalId;
-var questionCnt=0
+var questionCnt = 0;
 //var audio = new Audio('assets/javascript/TheOffice.mp3');
 
 var trivia = [{
@@ -63,11 +63,17 @@ var trivia = [{
 function displayQuestion(num) {
     $(".question").html('<p>' + trivia[num].question + '</p>');
     for (var j = 0; j < trivia[num].options.length; j++) {
-        $(".answer."+j).html('<input type="radio" class ="question" name="question" value="' + trivia[num].options[j] + '" > ' + trivia[num].options[j] + ' <br>');
+        $(".answer." + j).html('<input type="radio" class ="question" name="question' + num + '" value="' + trivia[num].options[j] + '" > ' + trivia[num].options[j] + ' <br>');
         // console.log("here: ", trivia[i].options[j]);
     }
 }
 
-$(".answer").on("click", function() {
-
+$(".answer").on("click", function () {
+    //looping through the options and updating the trivia.userAns 
+    for (var i = 0; i < trivia.length; i++) {
+        trivia[questionCnt].userAns = $('input[name="question' + i + '"]:checked').val();
+    }
 });
+
+displayQuestion(0);
+displayQuestion(1);
