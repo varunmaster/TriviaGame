@@ -38,9 +38,9 @@ var trivia = [{
     correctAns: "... I'd love to be a part of one someday"
 }, {
     question: "7. Which of the following movies did Michael write, produce, direct, and star in?",
-    options: ["Hockey Sticks: Ignite", "The Best Boss: Chronicles", "Somehow, I Manage", "Somehow, I Manage"],
+    options: ["Hockey Sticks: Ignite", "The Best Boss: Chronicles", "Threat Level Midnight", "Somehow, I Manage"],
     userAns: "",
-    correctAns: "Somehow, I Manage"
+    correctAns: "Threat Level Midnight"
 }, {
     question: "8. Where does Michael move to with Holly?",
     options: ["New York", "Wyoming", "Arizona", "Colorado"],
