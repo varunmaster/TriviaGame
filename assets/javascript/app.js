@@ -2,6 +2,8 @@
 var numCorrect = 0;
 var numIncorrect = 0;
 var numUnanswered = 0;
+var timeLeft = 5;
+var intervalId;
 
 var trivia = [{
     question: "What is 1+1?",
@@ -48,9 +50,7 @@ for (var i = 0; i < trivia.length; i++) {
 }
 
 function checkAnswers() {
-    console.log("starting to check answer");
     for (var i = 0; i < trivia.length; i++) {
-        console.log("asdf");
         // console.log("userans: ", trivia[i].userAns);
         if (trivia[i].userAns === trivia[i].correctAns) {
             numCorrect += 1;
@@ -67,6 +67,7 @@ function restart() {
     numCorrect = 0;
     numUnanswered = 0;
     numIncorrect = 0;
+    timeLeft = 5;
     //setting userAnswer to blank
     for (var i = 0; i < trivia.length; i++) {
         trivia[i].userAns = "";
@@ -74,6 +75,34 @@ function restart() {
     //clearing the selected answers
     $(".question").prop('checked', false);
     // return trivia;
+    clearInterval(intervalId); 
+    intervalId = setInterval(decrement, 1000);
+}
+
+function decrement() {
+    timeLeft--;
+    $(".show-number").html("<h2>" + timeLeft + "</h2>");
+    if (timeLeft === 0) {
+        stopTimer();
+        // alert("Time Up!");
+        $(".questions").hide();
+        $(".results").show();
+        $(".submit").hide();
+        $(".retry").show();
+        $(".show-number").hide();
+        stopTimer();
+        for (var i = 0; i < trivia.length; i++) {
+            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val();
+        }
+        checkAnswers();
+        $(".numCorrect").text(numCorrect);
+        $(".numIncorrect").text(numIncorrect);
+        $(".numUnanswered").text(numUnanswered);
+    }
+}
+
+function stopTimer() {
+    clearInterval(intervalId);
 }
 
 $(document).ready(function () {
@@ -81,12 +110,16 @@ $(document).ready(function () {
     $(".results").hide();
     $(".submit").hide();
     $(".retry").hide();
+    $(".show-number").hide();
 
     $(".start").on("click", function () {
         $(".start").hide();
         $(".questions").show();
         $(".submit").show();
         $(".retry").hide();
+        $(".show-number").show();
+        clearInterval(intervalId); //need to clear the interval bc if we click resume multiple times, the clock will run faster. the decrement will be called multiple times
+        intervalId = setInterval(decrement, 1000);
     }); //start ends here
 
     $(".submit").on("click", function () {
@@ -94,6 +127,8 @@ $(document).ready(function () {
         $(".results").show();
         $(".submit").hide();
         $(".retry").show();
+        $(".show-number").hide();
+        stopTimer();
         //looping through the inputs (buttons) and then getting each checked value and putting it in userAns property of trivia
         for (var i = 0; i < trivia.length; i++) {
             trivia[i].userAns = $('input[name="question' + i + '"]:checked').val();
@@ -114,6 +149,7 @@ $(document).ready(function () {
         $(".questions").show();
         $(".submit").show();
         $(".retry").hide();
+        $(".show-number").show();
         restart();
     }); //retry ends here
 }); //doucment ends here
