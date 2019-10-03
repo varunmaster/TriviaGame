@@ -68,6 +68,7 @@ function restart() {
     numUnanswered = 0;
     numIncorrect = 0;
     timeLeft = 5;
+    $(".show-number").html("<h2>5</h2>");
     //setting userAnswer to blank
     for (var i = 0; i < trivia.length; i++) {
         trivia[i].userAns = "";
