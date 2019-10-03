@@ -50,18 +50,19 @@ for (var i = 0; i < trivia.length; i++) {
 }
 
 function checkAnswers() {
-    for(var i = 0; i < trivia.length; i++){
-        console.log()
+    for(var i = 0; i < trivia.length; i++) {
+        console.log("userans: ", trivia[i].userAns);
         if(trivia[i].userAns === trivia[i].correctAns) {
-            return numCorrect += 1;
+            numCorrect += 1;
         }
         else if(trivia[i].userAns === undefined) {
-            return numUnanswered += 1;
+            numUnanswered += 1;
         } 
         else {
-            return numIncorrect += 1;
+            numIncorrect += 1;
         }
     }
+    return numCorrect, numUnanswered, numIncorrect;
 }
 
 $(document).ready(function () {
@@ -73,45 +74,18 @@ $(document).ready(function () {
             // console.log("trivia.userans: ", trivia[i].userAns);
         }
         checkAnswers();
-        console.log("correct: ", numCorrect);
-        console.log("incorr: ", numIncorrect);
-        console.log("unans: ", numUnanswered);
+        // console.log("correct: ", numCorrect);
+        // console.log("incorr: ", numIncorrect);
+        // console.log("unans: ", numUnanswered);
         $(".numCorrect").text(numCorrect);
         $(".numIncorrect").text(numIncorrect);
         $(".numUnanswered").text(numUnanswered);
     }); //click ends here
 }); //doucment ends here
+
 /*
-
-timeout = setTimeout(checkAnswers,120000); //if user doesn't submit in 120 seconds, do it automatically
-
-$(document).ready(function (){
-    $(".submit").on("click",function (){
-        clearTimeout(timeout); //if the submit button is clicked then stop the timer
-        console.log($("input[name='q1']:checked").val());
+       console.log($("input[name='q1']:checked").val());
         userAnsArr.push($("input[name='q1']:checked").val());
         userAnsArr.push($("input[name='q2']:checked").val());
-        // if(!$(".question").is(':checked')){
-        //     alert("checked");
-        // }
-        console.log(userAnsArr);
-        checkAnswers(userAnsArr);
-        console.log("numCorrect: " + numCorrect);
-        console.log("numIncorr: " + numIncorrect);
-        console.log("numUnans: " + numUnanswered);
-    }); //click ends here
-});//doucment ends here
 
-function checkAnswers(userAnsArr) {
-    for (var i = 0; i < userAnsArr.length; i++){
-        if (userAnsArr[i] === AnsArr[i]) {
-            return numCorrect += 1;
-        }
-        else if (userAnsArr[i] === undefined) {
-            return numUnanswered += 1;
-        }else {
-            return numIncorrect += 1;
-        }
-    }
-}
 */
