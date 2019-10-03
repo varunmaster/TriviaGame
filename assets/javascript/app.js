@@ -7,30 +7,35 @@ var intervalId;
 var audio = new Audio('assets/javascript/TheOffice.mp3');
 
 var trivia = [{
-    question: "In the TV show 'The Office', who is the regional manager?",
+    question: "1. In the TV show 'The Office', who is the regional manager?",
     options: ["Michael Scott", "Jim Halpert", "Pam Beasely", "Dwight Schrute"],
     userAns: "",
     correctAns: "Michael Scott"
 }, {
-    question: "What special event does Michael host for his employees every year?",
+    question: "2. What special event does Michael host for his employees every year?",
     options: ["The Mifflins", "The Dunflies", "The Miffies", "The Dundies"],
     userAns: "",
     correctAns: "The Dundies"
 }, {
-    question: "How does Michael save Meredith from rabies?",
+    question: "3. How does Michael save Meredith from rabies?",
     options: ["Hits her with his car", "He lends her money for an operation", "He stops her from taking too many painkillers", "He drives her mom after the Christian fiasco"],
     userAns: "",
     correctAns: "Hits her with his car"
 }, {
-    question: "Who does Michael marry?",
+    question: "4. Who does Michael marry?",
     options: ["Pam", "Jan", "Holly", "Angela"],
     userAns: "",
     correctAns: "Holly"
 }, {
-    question: "If Michael had a gun with two bullets and was in a room with Hitler, Bin Laden, and Toby, what would he do?",
+    question: "5. If Michael had a gun with two bullets and was in a room with Hitler, Bin Laden, and Toby, what would he do?",
     options: ["Shoot Hitler and Bin Laden", "Shoot Toby twice", "Shoot Hitler twice", "Shoot Bin Laden twice"],
     userAns: "",
     correctAns: "Shoot Toby twice"
+}, {
+    question: "6. Complete the quote: 'I love inside jokes...'",
+    options: ["... I'd love to be a part of one someday", "... But no one likes it when I explain it to them", "... But I don't understand them", "... Do you want to have an inside joke with me?"],
+    userAns: "",
+    correctAns: "... I'd love to be a part of one someday"
 }];
 
 //creating and calling a function to display the questions from the trivia objectarray
@@ -79,7 +84,7 @@ function restart() {
     //clearing the selected answers
     $(".question").prop('checked', false);
     // return trivia;
-    clearInterval(intervalId); 
+    clearInterval(intervalId);
     intervalId = setInterval(decrement, 1000);
 }
 
@@ -96,7 +101,7 @@ function decrement() {
         $(".show-number").hide();
         stopTimer();
         for (var i = 0; i < trivia.length; i++) {
-            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val(); 
+            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val();
         }
         checkAnswers();
         $(".numCorrect").text(numCorrect);
@@ -115,7 +120,7 @@ $(document).ready(function () {
     $(".submit").hide();
     $(".retry").hide();
     $(".show-number").hide();
-    audio.play();
+    // audio.play();
 
     $(".start").on("click", function () {
         $(".start").hide();
@@ -123,7 +128,7 @@ $(document).ready(function () {
         $(".submit").show();
         $(".retry").hide();
         $(".show-number").show();
-        clearInterval(intervalId); 
+        clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
     }); //start ends here
 
@@ -136,7 +141,7 @@ $(document).ready(function () {
         stopTimer();
         //looping through the inputs (buttons) and then getting each checked value and putting it in userAns property of trivia
         for (var i = 0; i < trivia.length; i++) {
-            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val(); 
+            trivia[i].userAns = $('input[name="question' + i + '"]:checked').val();
             // console.log($('input[name="question'+i+'"]:checked').val());
             // console.log("trivia.userans: ", trivia[i].userAns);
         }
