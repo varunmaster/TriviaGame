@@ -2,7 +2,7 @@
 var numCorrect = 0;
 var numIncorrect = 0;
 var numUnanswered = 0;
-var timeLeft = 30;
+var timeLeft = 60;
 var intervalId;
 var audio = new Audio('assets/javascript/TheOffice.mp3');
 
@@ -36,6 +36,26 @@ var trivia = [{
     options: ["... I'd love to be a part of one someday", "... But no one likes it when I explain it to them", "... But I don't understand them", "... Do you want to have an inside joke with me?"],
     userAns: "",
     correctAns: "... I'd love to be a part of one someday"
+}, {
+    question: "7. Which of the following movies did Michael write, produce, direct, and star in?",
+    options: ["Hockey Sticks: Ignite", "The Best Boss: Chronicles", "Somehow, I Manage", "Somehow, I Manage"],
+    userAns: "",
+    correctAns: "Somehow, I Manage"
+}, {
+    question: "8. Where does Michael move to with Holly?",
+    options: ["New York", "Wyoming", "Arizona", "Colorado"],
+    userAns: "",
+    correctAns: "Colorado"
+}, {
+    question: "9. What was the name of Angela's sick cat that Dwight killed?",
+    options: ["Sprinkles", "Mr. Longwhiskers", "Princess Puss", "Kitty"],
+    userAns: "",
+    correctAns: "Sprinkles"
+}, {
+    question: "10. What is Michael's favorite joke of all time?",
+    options: ["Your mama's so fat!", "That's what she said", "Can I have some fries with that shake?", "You sound like my grandma!"],
+    userAns: "",
+    correctAns: "That's what she said"
 }];
 
 //creating and calling a function to display the questions from the trivia objectarray
@@ -75,8 +95,8 @@ function restart() {
     numCorrect = 0;
     numUnanswered = 0;
     numIncorrect = 0;
-    timeLeft = 30;
-    $(".show-number").html("<h2>30</h2>");
+    timeLeft = 60;
+    $(".show-number").html("<h2>60</h2>");
     //setting userAnswer to blank
     for (var i = 0; i < trivia.length; i++) {
         trivia[i].userAns = "";
