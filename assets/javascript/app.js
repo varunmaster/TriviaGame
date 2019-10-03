@@ -66,7 +66,20 @@ function checkAnswers() {
 }
 
 $(document).ready(function () {
+    $(".questions").hide();
+    $(".results").hide();
+    $(".submit").hide();
+    
+    $(".start").on("click",function() {
+        $(".start").hide();
+        $(".questions").show();
+        $(".submit").show();
+    });//start ends here
+
     $(".submit").on("click", function () {
+        $(".questions").hide();
+        $(".results").show();
+        $(".submit").hide();
         //looping through the inputs (buttons) and then getting each checked value and putting it in userAns property of trivia
         for(var i  = 0; i < trivia.length; i++) {
             trivia[i].userAns = $('input[name="question'+i+'"]:checked').val()
@@ -80,7 +93,7 @@ $(document).ready(function () {
         $(".numCorrect").text(numCorrect);
         $(".numIncorrect").text(numIncorrect);
         $(".numUnanswered").text(numUnanswered);
-    }); //click ends here
+    }); //submit ends here
 }); //doucment ends here
 
 /*
