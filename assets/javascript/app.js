@@ -1,5 +1,4 @@
-var userAnsArr = [];
-var AnsArr = [];
+//TODO: add timer/auto-submit
 var numCorrect = 0;
 var numIncorrect = 0;
 var numUnanswered = 0;
@@ -43,10 +42,10 @@ function displayQuestions(num) {
     $(".question." + num).prepend('<p>' + trivia[num].question + '</p>');
 }
 
-//looping through my trivia object arry and then looping through the options array to display each as a button
+//looping through my trivia object arry and then looping through the options property array to display each as a button
 for (var i = 0; i < trivia.length; i++) {
     for (var j = 0; j < trivia[i].options.length; j++)
-        $(".answer." + i).append('<input type="radio" name=question' + i + ' value='+trivia[i].options[j]+' > ' + trivia[i].options[j] + ' <br>');
+        $(".answer." + i).append('<input type="radio" class ="question" name=question' + i + ' value='+trivia[i].options[j]+' > ' + trivia[i].options[j] + ' <br>');
 }
 
 function checkAnswers() {
@@ -65,21 +64,35 @@ function checkAnswers() {
     return numCorrect, numUnanswered, numIncorrect;
 }
 
+function restart() {
+    numCorrect, numUnanswered, numIncorrect = 0;
+    //setting userAnswer to blank
+    for(var i = 0; i < trivia.length; i++) {
+        trivia[i].userAns = "";
+    }
+    //clearing the selected answers
+    $(".question").prop('checked',false);
+    return trivia;
+}
+
 $(document).ready(function () {
     $(".questions").hide();
     $(".results").hide();
     $(".submit").hide();
-    
+    $(".retry").hide();
+
     $(".start").on("click",function() {
         $(".start").hide();
         $(".questions").show();
         $(".submit").show();
+        $(".retry").hide();
     });//start ends here
 
     $(".submit").on("click", function () {
         $(".questions").hide();
         $(".results").show();
         $(".submit").hide();
+        $(".retry").show();
         //looping through the inputs (buttons) and then getting each checked value and putting it in userAns property of trivia
         for(var i  = 0; i < trivia.length; i++) {
             trivia[i].userAns = $('input[name="question'+i+'"]:checked').val()
@@ -94,11 +107,12 @@ $(document).ready(function () {
         $(".numIncorrect").text(numIncorrect);
         $(".numUnanswered").text(numUnanswered);
     }); //submit ends here
+
+    $(".retry").on("click", function() {
+        $(".results").hide();
+        $(".questions").show();
+        $(".submit").show();
+        $(".retry").hide();
+        restart();
+    }); //retry ends here
 }); //doucment ends here
-
-/*
-       console.log($("input[name='q1']:checked").val());
-        userAnsArr.push($("input[name='q1']:checked").val());
-        userAnsArr.push($("input[name='q2']:checked").val());
-
-*/
