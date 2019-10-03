@@ -68,12 +68,33 @@ function displayQuestion(num) {
     }
 }
 
-$(".answer").on("click", function () {
-    //looping through the options and updating the trivia.userAns 
+function checkAnswers() {
     for (var i = 0; i < trivia.length; i++) {
-        trivia[questionCnt].userAns = $('input[name="question' + i + '"]:checked').val();
+        console.log("userans: ", trivia[i].userAns);
+        console.log("correctAns: ", trivia[i].correctAns);
+        if (trivia[i].userAns === trivia[i].correctAns) {
+            numCorrect += 1;
+        } else if (trivia[i].userAns === undefined) {
+            numUnanswered += 1;
+        } else {
+            numIncorrect += 1;
+        }
     }
-});
+    return [numCorrect, numUnanswered, numIncorrect];
+}
 
-displayQuestion(0);
-displayQuestion(1);
+$(document).ready(function () {
+    displayQuestion(0);
+    $(".answer").on("click", function () {
+        //looping through the options and updating the trivia.userAns 
+        for (var i = 0; i < trivia.length; i++) {
+            trivia[questionCnt].userAns = $('input[name="question' + i + '"]:checked').val();
+        }
+        questionCnt++;
+        if (questionCnt < 10) {
+            displayQuestion(questionCnt);
+        } else {
+            checkAnswers();
+        }
+    });
+});
