@@ -93,7 +93,7 @@ function decrement() {
     $(".show-number").html("<h2>" + timeLeft + "</h2>");
     if (timeLeft === 0) {
         stopTimer();
-        // alert("Time Up!");
+        alert("Times Up! Let's see how well you know The Office");
         $(".questions").hide();
         $(".results").show();
         $(".submit").hide();
