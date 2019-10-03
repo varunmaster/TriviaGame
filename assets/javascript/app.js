@@ -1,4 +1,3 @@
-//TODO: add timer/auto-submit
 var numCorrect = 0;
 var numIncorrect = 0;
 var numUnanswered = 0;
@@ -96,7 +95,7 @@ function restart() {
     numUnanswered = 0;
     numIncorrect = 0;
     timeLeft = 60;
-    $(".show-number").html("<h2>60</h2>");
+    $(".show-number").html("<h2>Time Remaining:</h2><h2>60</h2>");
     //setting userAnswer to blank
     for (var i = 0; i < trivia.length; i++) {
         trivia[i].userAns = "";
@@ -110,7 +109,7 @@ function restart() {
 
 function decrement() {
     timeLeft--;
-    $(".show-number").html("<h2>" + timeLeft + "</h2>");
+    $(".show-number").html("<h2>Time Remaining:</h2><h2>" + timeLeft + "</h2>");
     if (timeLeft === 0) {
         stopTimer();
         alert("Times Up! Let's see how well you know The Office");
