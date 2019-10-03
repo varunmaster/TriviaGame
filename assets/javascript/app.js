@@ -4,7 +4,7 @@ var numIncorrect = 0;
 var numUnanswered = 0;
 var timeLeft = 30;
 var intervalId;
-var audio = new Audio('./TheOffice.mp3');
+var audio = new Audio('assets/javascript/TheOffice.mp3');
 
 var trivia = [{
     question: "In the TV show 'The Office', who is the regional manager?",
@@ -115,6 +115,7 @@ $(document).ready(function () {
     $(".submit").hide();
     $(".retry").hide();
     $(".show-number").hide();
+    audio.play();
 
     $(".start").on("click", function () {
         $(".start").hide();
@@ -122,7 +123,6 @@ $(document).ready(function () {
         $(".submit").show();
         $(".retry").hide();
         $(".show-number").show();
-        // audio.play();
         clearInterval(intervalId); 
         intervalId = setInterval(decrement, 1000);
     }); //start ends here
