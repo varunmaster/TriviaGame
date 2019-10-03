@@ -1,10 +1,13 @@
+//TODO: add html for displaying results
+//      add timer per question
+//      show correct answer when time = 0
+//      and maybe gif/img of when timer = 0
 var numCorrect = 0;
 var numIncorrect = 0;
 var numUnanswered = 0;
 var timeLeft = 60;
 var intervalId;
 var questionCnt = 0;
-//var audio = new Audio('assets/javascript/TheOffice.mp3');
 
 var trivia = [{
     question: "1. In the TV show 'The Office', who is the regional manager?",
@@ -69,6 +72,7 @@ function displayQuestion(num) {
 }
 
 function checkAnswers() {
+    $(".results").show();
     for (var i = 0; i < trivia.length; i++) {
         console.log("userans: ", trivia[i].userAns);
         console.log("correctAns: ", trivia[i].correctAns);
@@ -83,18 +87,41 @@ function checkAnswers() {
     return [numCorrect, numUnanswered, numIncorrect];
 }
 
+function retry() {
+    displayQuestion(0);
+    numCorrect = 0;
+    numUnanswered = 0;
+    numIncorrect = 0;
+    questionCnt = 0;
+    for (var i = 0; i < trivia.length; i++) {
+        trivia[i].userAns = "";
+    }
+    $(".question").prop('checked', false);
+}
+
 $(document).ready(function () {
     displayQuestion(0);
+    $(".results").hide();
+    $(".questions").show(); //change this to hide
+
     $(".answer").on("click", function () {
-        //looping through the options and updating the trivia.userAns 
-        for (var i = 0; i < trivia.length; i++) {
-            trivia[questionCnt].userAns = $('input[name="question' + i + '"]:checked').val();
-        }
+        trivia[questionCnt].userAns = $('input[name="question' + questionCnt + '"]:checked').val();
         questionCnt++;
         if (questionCnt < 10) {
             displayQuestion(questionCnt);
         } else {
+            $(".questions").hide();
+            $(".retry").show();
             checkAnswers();
+            $(".numCorrect").text(numCorrect);
+            $(".numIncorrect").text(numIncorrect);
         }
+    }); //end click here
+
+    $(".retry").on("click", function () {
+        $(".results").hide();
+        $(".questions").show();
+        $(".retry").hide();
+        retry();
     });
-});
+}); //end document here
