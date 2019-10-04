@@ -105,7 +105,7 @@ function decrement() {
     timeLeft--;
     $(".show-number").html("<h4>Time Remaining:</h4><h4>" + timeLeft + "</h4>");
     if (timeLeft === 0) {
-        stopTimer();
+        // stopTimer();
         trivia[questionCnt].userAns = $('input[name="question' + questionCnt + '"]:checked').val();
         questionCnt++;
         displayQuestion(questionCnt);
@@ -149,6 +149,7 @@ $(document).ready(function () {
             clearInterval(intervalId);
             intervalId = setInterval(decrement, 1000);
             displayQuestion(questionCnt);
+            $(".show-number").html("<h2>Time Remaining:</h2><h2>10</h2>");
         }
         else {
             $(".questions").hide();
