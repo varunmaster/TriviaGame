@@ -92,7 +92,7 @@ function checkAnswers() {
 function retry() {
     displayQuestion(0);
     numCorrect = 0;
-    numUnanswered = 0;
+    numUnanswered = 0;1
     numIncorrect = 0;
     questionCnt = 0;
     timeLeft = 10;
@@ -108,11 +108,12 @@ function decrement() {
     console.log("timeleft: ", timeLeft);
     console.log("questionCnt: ", questionCnt);
     if (timeLeft === 0) {
-        // stopTimer();
         trivia[questionCnt].userAns = $('input[name="question' + questionCnt + '"]:checked').val();
+        $(".correct").html("<p>The correct answer was:</p><p>"+trivia[questionCnt].correctAns+"</p>")
         questionCnt++;
         displayQuestion(questionCnt);
         timeLeft = 10;
+        
     }
     else if (timeLeft === 0 && questionCnt >= 9) {
         stopTimer();
