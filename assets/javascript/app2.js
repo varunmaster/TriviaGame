@@ -105,12 +105,17 @@ function retry() {
 function decrement() {
     timeLeft--;
     $(".show-number").html("<h4>Time Remaining:</h4><h4>" + timeLeft + "</h4>");
+    console.log("timeleft: ", timeLeft);
+    console.log("questionCnt: ", questionCnt);
     if (timeLeft === 0) {
         // stopTimer();
         trivia[questionCnt].userAns = $('input[name="question' + questionCnt + '"]:checked').val();
         questionCnt++;
         displayQuestion(questionCnt);
         timeLeft = 10;
+    }
+    else if (timeLeft === 0 && questionCnt >= 9) {
+        stopTimer();
     }
 }
 
@@ -131,25 +136,16 @@ $(document).ready(function () {
         $(".show-number").show();
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
+        console.log("timeleft: ", timeLeft);
     });
 
     $(".answer").on("click", function () {
         trivia[questionCnt].userAns = $('input[name="question' + questionCnt + '"]:checked').val();
         questionCnt++;
-        clearInterval(intervalId);
-        intervalId = setInterval(decrement, 1000);
         if (questionCnt < 10) {
             timeLeft = 10;
             displayQuestion(questionCnt);
-            clearInterval(intervalId);
-            intervalId = setInterval(decrement, 1000);
             $(".show-number").html("<h4>Time Remaining:</h4><h4>" + timeLeft + "</h4>");
-        }
-        else if (timeLeft === 0) {
-            questionCnt++;
-            clearInterval(intervalId);
-            intervalId = setInterval(decrement, 1000);
-            displayQuestion(questionCnt);
         }
         else {
             $(".questions").hide();
