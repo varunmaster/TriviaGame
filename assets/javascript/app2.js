@@ -5,7 +5,7 @@
 var numCorrect = 0;
 var numIncorrect = 0;
 var numUnanswered = 0;
-var timeLeft = 60;
+var timeLeft = 10;
 var intervalId;
 var questionCnt = 0;
 
@@ -69,6 +69,7 @@ function displayQuestion(num) {
         $(".answer." + j).html('<input type="radio" class ="question" name="question' + num + '" value="' + trivia[num].options[j] + '" > ' + trivia[num].options[j] + ' <br>');
         // console.log("here: ", trivia[i].options[j]);
     }
+    timeLeft = 10;
 }
 
 function checkAnswers() {
@@ -93,28 +94,69 @@ function retry() {
     numUnanswered = 0;
     numIncorrect = 0;
     questionCnt = 0;
+    timeLeft = 10;
     for (var i = 0; i < trivia.length; i++) {
         trivia[i].userAns = "";
     }
     $(".question").prop('checked', false);
 }
 
+function decrement() {
+    timeLeft--;
+    $(".show-number").html("<h4>Time Remaining:</h4><h4>" + timeLeft + "</h4>");
+    if (timeLeft === 0) {
+        stopTimer();
+        trivia[questionCnt].userAns = $('input[name="question' + questionCnt + '"]:checked').val();
+        questionCnt++;
+        displayQuestion(questionCnt);
+        timeLeft = 10;
+    }
+}
+
+function stopTimer() {
+    clearInterval(intervalId);
+}
+
 $(document).ready(function () {
     displayQuestion(0);
     $(".results").hide();
-    $(".questions").show(); //change this to hide
+    $(".questions").hide();
+    $(".show-number").hide();
+
+    $(".start").on("click", function () {
+        $(".start").hide();
+        $(".questions").show();
+        $(".retry").hide();
+        $(".show-number").show();
+        clearInterval(intervalId);
+        intervalId = setInterval(decrement, 1000);
+    });
 
     $(".answer").on("click", function () {
         trivia[questionCnt].userAns = $('input[name="question' + questionCnt + '"]:checked').val();
         questionCnt++;
+        clearInterval(intervalId);
+        intervalId = setInterval(decrement, 1000);
         if (questionCnt < 10) {
+            timeLeft = 10;
             displayQuestion(questionCnt);
-        } else {
+            clearInterval(intervalId);
+            intervalId = setInterval(decrement, 1000);
+            $(".show-number").html("<h4>Time Remaining:</h4><h4>" + timeLeft + "</h4>");
+        }
+        else if (timeLeft === 0) {
+            questionCnt++;
+            clearInterval(intervalId);
+            intervalId = setInterval(decrement, 1000);
+            displayQuestion(questionCnt);
+        }
+        else {
             $(".questions").hide();
             $(".retry").show();
             checkAnswers();
             $(".numCorrect").text(numCorrect);
             $(".numIncorrect").text(numIncorrect);
+            $(".show-number").hide();
         }
     }); //end click here
 
@@ -122,6 +164,7 @@ $(document).ready(function () {
         $(".results").hide();
         $(".questions").show();
         $(".retry").hide();
+        $(".show-number").show();
         retry();
     });
 }); //end document here
