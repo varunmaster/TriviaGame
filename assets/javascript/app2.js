@@ -70,6 +70,7 @@ function displayQuestion(num) {
         // console.log("here: ", trivia[i].options[j]);
     }
     timeLeft = 10;
+    $(".show-number").html("<h4>Time Remaining:</h4><h4>10</h4>");
 }
 
 function checkAnswers() {
@@ -149,7 +150,6 @@ $(document).ready(function () {
             clearInterval(intervalId);
             intervalId = setInterval(decrement, 1000);
             displayQuestion(questionCnt);
-            $(".show-number").html("<h2>Time Remaining:</h2><h2>10</h2>");
         }
         else {
             $(".questions").hide();
